@@ -1,29 +1,33 @@
-import React, { useEffect, useState }  from 'react';
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "./pages/Home";
+import axios from 'axios';
+import React from 'react';
+import { useEffect, useState }  from 'react';
+import Posts from './components/Posts';
 
 function App() {
-  const [ blog , setBlog ] = useState();
-  console.log(blog);
+  const [ posts, setPosts ] = useState([]);
+  const [ loading, setLoading ] = useState(false);
+  const [ currentPage, setCurrentPage ] = useState(1);
+  const [ postsPerPage, setPostsPerPage ] = useState(10);
 
   useEffect(() => {
-    fakeBlog();
+    const fetchPosts = async () => {
+      setLoading(true);
+      const res = await axios.get('https://dummyjson.com/posts');
+      setPosts(res.data);
+      setLoading(false);
+    }
+
+    fetchPosts();
   }, []);
 
-  const fakeBlog = async() => {
-    const response = await fetch("https://api.slingacademy.com/v1/sample-data/blog-posts");
-    //console.log(response);
-    const jsonData = await response.json();
-    //console.log(jsonData);
-    setBlog(jsonData);
-  }
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 
   return (
-    <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<Home/>}/>
-    </Routes>
-    </BrowserRouter>
+    <div>
+      <Posts posts={currentPosts} loading={loading}/>
+    </div>
   );
 }
 
