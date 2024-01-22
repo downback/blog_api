@@ -8,11 +8,11 @@ const Pagination = ( { postsPerPage, totalPosts, paginate }) => {
     }
 
   return (
-    <div>
-        <ul>
+    <div className='flex w-screen h-fit justify-center content-center'>
+        <ul className="flex flex-row">
             {pageNumbers.map((number)=>(
                 <li key={number}>
-                    <a onClick={() => paginate(number)} href="!#">
+                    <a onClick={() => paginate(number)} href="!#" className="border border-current rounded-lg p-2 m-3 w-3 h-3 bg-sky-200 hover:bg-sky-400">
                         {number}
                     </a>
                 </li>

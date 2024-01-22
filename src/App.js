@@ -3,16 +3,17 @@ import React from "react";
 import { useEffect, useState } from "react";
 import Posts from "./components/Posts";
 import Pagination from "./components/Pagination";
-import Header from "./pages/Header";
+import Header from "./components/Header";
+import "./index.css"
 
 function App() {
   const [posts, setPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(10);
+  const [postsPerPage] = useState(5);
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const res = await axios.get("https://dummyjson.com/posts?limit=50");
+      const res = await axios.get("https://dummyjson.com/posts?limit=30");
       setPosts(res.data.posts);
     };
 
@@ -34,7 +35,7 @@ function App() {
   const paginate = (pageNumber) => setCurrentPage(pageNumber) ;
 
   return (
-    <div>
+    <div container m-0 p-0>
       <Header />
       <Posts posts={currentPosts} />
       <Pagination
