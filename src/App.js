@@ -3,6 +3,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import Posts from "./components/Posts";
 import Pagination from "./components/Pagination";
+import Header from "./pages/Header";
 
 function App() {
   const [posts, setPosts] = useState([]);
@@ -34,6 +35,7 @@ function App() {
 
   return (
     <div>
+      <Header />
       <Posts posts={currentPosts} />
       <Pagination
         postsPerPage={postsPerPage}
@@ -41,7 +43,7 @@ function App() {
         paginate={paginate}
       />
     </div>
-  );
+  ); 
 }
 
 export default App;
