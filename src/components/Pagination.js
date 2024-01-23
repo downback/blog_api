@@ -8,7 +8,7 @@ const Pagination = ( { postsPerPage, totalPosts, paginate }) => {
     }
 
   return (
-    <div className='flex w-screen h-fit justify-center content-center'>
+    <div className='flex w-screen h-fit justify-center content-center my-5 fixed bottom-12'>
         <ul className="flex flex-row">
             {pageNumbers.map((number)=>(
                 <li key={number}>

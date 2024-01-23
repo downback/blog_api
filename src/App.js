@@ -9,7 +9,7 @@ import "./index.css"
 function App() {
   const [posts, setPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(5);
+  const [postsPerPage] = useState(3);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -35,7 +35,7 @@ function App() {
   const paginate = (pageNumber) => setCurrentPage(pageNumber) ;
 
   return (
-    <div container m-0 p-0>
+    <div className="w-screen h-full flex flex-col justify-center items-center my-5">
       <Header />
       <Posts posts={currentPosts} />
       <Pagination
