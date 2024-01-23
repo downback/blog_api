@@ -7,6 +7,8 @@ const Pagination = ( { postsPerPage, totalPosts, paginate }) => {
         pageNumbers.push(i);
     }
 
+    //한번 만든 변수를 최대한 변경하지 않으려 할때, let으로 하는 것이 더 좋음. for문 대신 쓰는 방법은? spread 연상자(return 이 되는 method)
+
   return (
     <div className='flex w-screen h-fit justify-center content-center my-5 fixed bottom-12'>
         <ul className="flex flex-row">
