@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Posts from "../components/Posts";
 import Pagination from "../components/Pagination";
 import Header from "../components/Header";
+import SearchBar from "../components/SearchBar";
 
 function Home() {
   const [posts, setPosts] = useState([]);
@@ -41,6 +42,7 @@ function Home() {
       <Header />
       <Posts posts={currentPosts} />
       <Pagination totalPages={totalPages} paginate={paginate} />
+      <SearchBar />
     </div>
   );
 }

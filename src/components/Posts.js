@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 
-const Posts = ({ posts}) => {
+const Posts = ({ posts }) => {
 
   const navigate = useNavigate();
 
