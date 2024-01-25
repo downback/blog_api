@@ -27,7 +27,14 @@ const Blog = () => {
           </li>
         </Link>
 
-        <li className="mx-10 border border-current rounded-lg w-fit h-8 py-1 m-3 bg-sky-200 hover:bg-sky-400">EDIT</li>
+        <li
+          onClick={() => {
+            navigate('/add_edit_post/' + id)
+          }}
+          className="mx-10 border border-current rounded-lg w-fit h-8 py-1 m-3 bg-sky-200 hover:bg-sky-400"
+        >
+          EDIT
+        </li>
 
         <li className="mx-10 border border-current rounded-lg w-fit h-8 py-1 m-3 bg-sky-200 hover:bg-sky-400">
           DELETE
