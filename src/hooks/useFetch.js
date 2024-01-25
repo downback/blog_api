@@ -2,7 +2,7 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 
 const useFetch = (url) => {
-  const [posts, setPosts] = useState(null)
+  const [data, setData] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
@@ -11,7 +11,7 @@ const useFetch = (url) => {
     axios
       .get(url)
       .then((res) => {
-        setPosts(res.data)
+        setData(res.data)
       })
       .catch((err) => {
         setError(err)
@@ -21,7 +21,7 @@ const useFetch = (url) => {
       })
   }, [url])
 
-  return { posts, loading, error }
+  return { data, loading, error }
 }
 
 export default useFetch
