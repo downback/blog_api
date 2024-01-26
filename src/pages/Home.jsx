@@ -5,6 +5,7 @@ import Posts from '../components/Posts'
 import Pagination from '../components/Pagination'
 import Header from '../components/Header'
 import SearchBar from '../components/SearchBar'
+import { Link } from 'react-router-dom'
 
 function Home() {
   const [posts, setPosts] = useState([])
@@ -43,6 +44,11 @@ function Home() {
       <Posts posts={currentPosts} />
       <Pagination totalPages={totalPages} paginate={paginate} />
       <SearchBar />
+      <Link to="/add_edit_post/:id">
+        <button className="fixed bottom-20 right-20 border border-current rounded-full p-3 bg-sky-400 hover:bg-sky-200">
+          ADD
+        </button>
+      </Link>
     </div>
   )
 }
