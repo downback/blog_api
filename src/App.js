@@ -1,50 +1,20 @@
-import axios from "axios";
-import React from "react";
-import { useEffect, useState } from "react";
-import Posts from "./components/Posts";
-import Pagination from "./components/Pagination";
-import Header from "./components/Header";
-import "./index.css"
+import React from 'react'
+import './index.css'
+import { Route, Routes } from 'react-router'
+import Home from './pages/Home'
+import BlogDetail from './pages/BlogDetail'
+import EditBlog from './pages/EditBlog'
+import AddBlog from './pages/AddBlog'
 
 function App() {
-  const [posts, setPosts] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(3);
-
-  useEffect(() => {
-    const fetchPosts = async () => {
-      const res = await axios.get("https://dummyjson.com/posts?limit=30");
-      setPosts(res.data.posts);
-    };
-
-    //const fetchPosts = async () => {
-    //  const response = await fetch('https://dummyjson.com/posts');
-    //  const data = await response.json();
-    //  setPosts(data.posts);
-    //};
-
-    fetchPosts();
-  }, []);
-
-  // Get current posts
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
-
-  // Change page
-  const paginate = (pageNumber) => setCurrentPage(pageNumber) ;
-
   return (
-    <div className="w-screen h-full flex flex-col justify-center items-center my-5">
-      <Header />
-      <Posts posts={currentPosts} />
-      <Pagination
-        postsPerPage={postsPerPage}
-        totalPosts={posts.length}
-        paginate={paginate}
-      />
-    </div>
-  ); 
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/post/:id" element={<BlogDetail />} />
+      <Route path="/edit_post/:id" element={<EditBlog />} />
+      <Route path="/add_post" element={<AddBlog />} />
+    </Routes>
+  )
 }
 
-export default App;
+export default App

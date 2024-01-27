@@ -1,70 +1,112 @@
-# Getting Started with Create React App
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#status">Status</a></li>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+  </ol>
+</details>
 
-## Available Scripts
+# API BLOG PROJECT
 
-In the project directory, you can run:
+## About this project
 
-### `npm start`
+This project is a blog fetched with dummy API data.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Built with
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+![NPM Version](https://img.shields.io/npm/v/react)</br>
+![Static Badge](https://img.shields.io/badge/React-61DBFB?style=for-the-badge&logo=react&logoColor=61DBFB&labelColor=black)</br>
+![Axios Badge](https://img.shields.io/badge/Axios-5A29E4?logo=axios&logoColor=fff&style=for-the-badge)</br>
+![JavaScript Badge](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=000&style=for-the-badge)</br>
+![Tailwind CSS Badge](https://img.shields.io/badge/Tailwind%20CSS-06B6D4?logo=tailwindcss&logoColor=fff&style=for-the-badge)
 
-### `npm test`
+## Getting Started
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+This is an instructions on setting up the project locally. </br>
+To get a local copy up and running follow these simple example steps.
 
-### `npm run build`
+### Prerequisites
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- npm
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+npm install
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- axios
+  - link : https://axios-http.com/docs/intro
 
-### `npm run eject`
+```
+npm install axios
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- react-router-dom
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+npm create vite@latest name-of-your-project -- --template react
+# follow prompts
+cd <your new project directory>
+npm install react-router-dom localforage match-sorter sort-by
+npm run dev
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- eslint
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```
+npm i -D eslint
+```
 
-## Learn More
+- prettier
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```
+npm i -D prettier
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- tailwindcss
+  - link : https://tailwindcss.com/docs/guides/create-react-app
 
-### Code Splitting
+```
+npm install -D tailwindcss
+npx tailwindcss init
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```
 
-### Analyzing the Bundle Size
+</br>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Installation
 
-### Making a Progressive Web App
+1. Clone the repo
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```
+git clone https://github.com/downback/blog_api.git
+```
 
-### Advanced Configuration
+2. Clone the repo
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```
+npm install
+```
 
-### Deployment
+### API reference
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+[BLOG Dummyjson](https://dummyjson.com/docs/posts)
 
-### `npm run build` fails to minify
+## Status
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+[x] fetch jummy API </br>
+[x] building Home page and router </br>
+[ ] make a custom hook </br>
+[ ] create 'delete' & 'edit' fuctions
