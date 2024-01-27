@@ -9,7 +9,6 @@
   "eslint.options": {
     "overrideConfigFile": "LOCATION YOUR PROJECT DIRECTORY/.eslintrc.json"
   },
-  "eslint.workingDirectories": [
-    "../blog_api" // replace {PATH_TO_CLIENT} with you own path
-  ]
+  "js/ts.implicitProjectConfig.checkJs": true,
+  "javascript.validate.enable": false
 }

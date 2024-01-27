@@ -38,13 +38,15 @@ function Home() {
     setCurrentPage(pageNumber)
   }
 
+  //delete & edit function
+
   return (
     <div className="w-screen h-full flex flex-col justify-center items-center my-5">
       <Header />
       <Posts posts={currentPosts} />
       <Pagination totalPages={totalPages} paginate={paginate} />
       <SearchBar />
-      <Link to="/add_edit_post/:id">
+      <Link to="/add_post">
         <button className="fixed bottom-20 right-20 border border-current rounded-full p-3 bg-sky-400 hover:bg-sky-200">
           ADD
         </button>
