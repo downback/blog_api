@@ -10,5 +10,7 @@
     "overrideConfigFile": "LOCATION YOUR PROJECT DIRECTORY/.eslintrc.json"
   },
   "js/ts.implicitProjectConfig.checkJs": true,
-  "javascript.validate.enable": false
+  "javascript.validate.enable": false,
+  "editor.formatOnSave": true,
+  "prettier.semi": false
 }

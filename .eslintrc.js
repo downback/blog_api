@@ -20,7 +20,6 @@ module.exports = {
     sourceType: 'module'
   },
   rules: {
-    'react/prop-types': 'off',
-    'prettier/prettier': ['error', { endOfLine: 'auto' }]
+    'react/prop-types': 'off'
   }
 }
