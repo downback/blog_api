@@ -7,6 +7,9 @@ import NavBar from '../components/NavBar'
 
 const EditBlog = () => {
   const singleBlog = undefined
+  // TODO: custom hook 만들기
+  // const { data: singleBlogData, loading: singleBlogLoading } = useGetBlog({id});
+
   const [values, setValues] = useState({
     title: '',
     body: ''
@@ -17,12 +20,13 @@ const EditBlog = () => {
   const handleUpdate = (event) => {
     event.preventDefault()
     axios
-      .put('https://dummyjson.com/posts/', values)
+      .put(`https://dummyjson.com/posts/${1}`, values)
       .then((res) => {
         setValues(res.data)
       })
       .catch((err) => console.log(err))
   }
+  // TODO: 1대신 사용자 id를 넣어야함
 
   return (
     <>
