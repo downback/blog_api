@@ -10,8 +10,8 @@ const PostList = ({ posts }) => {
   }
 
   return (
-    <div className="flex w-screen h-fit justify-center content-center">
-      <ul className="flex flex-col w-full h-full items-center justify-center">
+    <div className="w-screen h-fit m-0 p-0 bg-slate-100">
+      <ul className="w-full h-full flex flex-row flex-wrap items-center justify-center">
         {posts.map((post) => (
           <li
             role="none"
@@ -19,21 +19,26 @@ const PostList = ({ posts }) => {
             onClick={() => {
               navigate(`/post/${post.id}`)
             }}
-            className="border rounded-sm border-current px-5 py-5 m-5 w-6/12 h-max text-center hover:bg-slate-100 cursor-pointer"
+            className="bg-white rounded shadow-md shadow-gray-400 px-5 py-5 m-5 w-4/12 h-max text-center cursor-pointer"
           >
             <h1 className="font-semibold text-lg mb-3">{post.title}</h1>
             <p>{post.body.substring(0, 150)}...</p>
             <div>
-              <ul className="flex flex-row">
+              <ul className="w-full h-ful flex flex-row items-center justify-center mt-3">
                 {post.tags.map((tag) => (
-                  <li key={tag} className="m-3">
+                  <li key={tag} className="m-3 px-2 rounded text-center w-auto h-6 bg-slate-200">
                     {tag}
                   </li>
                 ))}
               </ul>
             </div>
             <div className="">
-              <Link to={`/post/${post.id}`}>Read More</Link>
+              <Link
+                to={`/post/${post.id}`}
+                className="m-3 px-2 rounded text-center w-28 h-8 bg-slate-900 text-slate-100"
+              >
+                Read More
+              </Link>
             </div>
           </li>
         ))}

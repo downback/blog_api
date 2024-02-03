@@ -7,6 +7,7 @@ import Header from '../components/Header'
 import SearchBar from '../components/SearchBar'
 import useFetch from '../api/useFetch'
 import { useBlogsContext } from '../api/blogsContext'
+import NavBar from '../components/NavBar'
 
 function BlogHome() {
   // const [posts, setPosts] = useState([])
@@ -29,7 +30,7 @@ function BlogHome() {
   const { blogs, setSearchTerm, searchTerm, fetchBlogsFromSearch } = useBlogsContext()
   const [errorMsg, setErrorMsg] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
-  const postsPerPage = 3
+  const postsPerPage = 4
 
   // Get current posts
   const indexOfLastPost = currentPage * postsPerPage
@@ -61,21 +62,21 @@ function BlogHome() {
   }
 
   return (
-    <div className="w-screen h-full flex flex-col justify-center items-center my-5">
+    <>
+      <NavBar />
       <Header />
-      <PostList posts={currentPosts} />
-      <p>{errorMsg}</p>
-      <Pagination totalPages={totalPages} paginate={paginate} />
-      <SearchBar handleSearchTerm={handleSearchTerm} handleSearchResult={handleSearchResult} />
-      <Link to="/add_post">
-        <button
-          className="fixed bottom-20 right-20 border border-current rounded-full p-3 bg-sky-400 hover:bg-sky-200"
-          type="button"
-        >
-          ADD
-        </button>
-      </Link>
-    </div>
+      <div className="w-screen h-full flex flex-col justify-center items-center my-5">
+        <SearchBar handleSearchTerm={handleSearchTerm} handleSearchResult={handleSearchResult} />
+        <PostList posts={currentPosts} />
+        <p>{errorMsg}</p>
+        <Pagination totalPages={totalPages} paginate={paginate} />
+        <Link to="/add_post">
+          <button className="fixed bottom-20 right-20 rounded p-3 bg-sky-400 hover:bg-sky-300" type="button">
+            Add a Blog
+          </button>
+        </Link>
+      </div>
+    </>
   )
 }
 

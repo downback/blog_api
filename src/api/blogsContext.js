@@ -35,7 +35,7 @@ export const BlogsProvider = ({ children }) => {
   const fetchBlogs = async () => {
     dispatch({ type: GET_BLOGS_BEGIN })
     try {
-      const response = await axios.get(`${BLOG_URL}?limit=30`)
+      const response = await axios.get(`${BLOG_URL}?limit=40`)
       dispatch({ type: GET_BLOGS_SUCCESS, payload: response.data.posts })
     } catch (err) {
       console.log(err)

@@ -14,7 +14,7 @@ const Pagination = ({ totalPages, paginate }) => {
   const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1)
 
   return (
-    <div className="flex w-screen h-fit justify-center content-center my-5 fixed bottom-12">
+    <div className="flex w-screen h-fit justify-center content-center my-5 bottom-12">
       <ul className="flex flex-row">
         {pageNumbers.map((number) => (
           <li key={number}>

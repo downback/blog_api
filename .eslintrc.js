@@ -31,6 +31,8 @@ module.exports = {
     'object-curly-newline': 'off',
     'max-len': 'off',
     'jsx-a11y/label-has-associated-control': 'off',
+    'no-shadow': 'off',
+    'jsx-a11y/control-has-associated-label': 'off',
     'no-console': ['warn', { allow: ['clear', 'info', 'error', 'dir', 'trace', 'log'] }],
     'react/function-component-definition': [
       'error',
