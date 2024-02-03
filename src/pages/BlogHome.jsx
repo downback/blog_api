@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useEffect, useState, React } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import PostList from '../components/PostList'
 import Pagination from '../components/Pagination'
 import Header from '../components/Header'
@@ -27,7 +27,7 @@ function BlogHome() {
   //   fetchPosts()
   // }, [])
 
-  const { blogs, setSearchTerm, searchTerm, fetchBlogsFromSearch } = useBlogsContext()
+  const { blogs, fetchBlogsFromSearch } = useBlogsContext()
   const [errorMsg, setErrorMsg] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const postsPerPage = 4
@@ -37,6 +37,10 @@ function BlogHome() {
   const indexOfFirstPost = indexOfLastPost - postsPerPage
   const currentPosts = blogs.slice(indexOfFirstPost, indexOfLastPost)
   const totalPages = Math.ceil(blogs.length / postsPerPage)
+  const navigate = useNavigate()
+  const query = new URLSearchParams(window.location.search)
+  const queryParamValue = query.get('q')
+  const [searchTerm, setSearchTerm] = useState(queryParamValue || '')
 
   // Change page
   function paginate(pageNumber) {
@@ -49,6 +53,7 @@ function BlogHome() {
     e.preventDefault()
     if (e.target.value.replace(/[^\w\s]/gi, '').length !== 0) {
       setSearchTerm(e.target.value)
+
       setErrorMsg('')
     } else {
       setErrorMsg('Invalid search term, try again ...')
@@ -58,6 +63,7 @@ function BlogHome() {
   const handleSearchResult = (e) => {
     e.preventDefault()
     console.log(searchTerm)
+    navigate(`?q=${searchTerm}`)
     fetchBlogsFromSearch(searchTerm)
   }
 
@@ -66,7 +72,7 @@ function BlogHome() {
       <NavBar />
       <Header />
       <div className="w-screen h-full flex flex-col justify-center items-center my-5">
-        <SearchBar handleSearchTerm={handleSearchTerm} handleSearchResult={handleSearchResult} />
+        <SearchBar value={searchTerm} handleSearchTerm={handleSearchTerm} handleSearchResult={handleSearchResult} />
         <PostList posts={currentPosts} />
         <p>{errorMsg}</p>
         <Pagination totalPages={totalPages} paginate={paginate} />
