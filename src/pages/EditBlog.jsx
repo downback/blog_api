@@ -2,13 +2,11 @@ import { useParams } from 'react-router'
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from '../api/axios'
-import { useBlogsContext } from '../context/blogsContext'
 import Editor from '../components/Editor'
 import NavBar from '../components/NavBar'
 
 const EditBlog = () => {
-  const { fetchSingleBlog, singleBlog, tempBlogs, singleBlogLoading } = useBlogsContext()
-
+  const singleBlog = undefined
   const [values, setValues] = useState({
     title: '',
     body: ''

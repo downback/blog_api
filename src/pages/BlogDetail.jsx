@@ -1,20 +1,31 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import { Link } from 'react-router-dom'
-import { useBlogsContext } from '../context/blogsContext'
 import axios from '../api/axios'
 import NavBar from '../components/NavBar'
+import fetchSingleBlog from '../api/singleBlog'
 
 const BlogDetail = () => {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { fetchSingleBlog, singleBlog, tempBlogs, singleBlogLoading } = useBlogsContext()
+  const [singleBlog, setSingleBlog] = useState(undefined)
 
   useEffect(() => {
-    fetchSingleBlog(id)
-  }, [singleBlog.id, id])
+    fetchSingleBlog({
+      id,
+      onSuccess: (data) => {
+        setSingleBlog(data)
+      },
+      onError: (error) => {}
+    })
+  }, [id])
 
-  if (singleBlogLoading) {
+  // const { data: singleBlogData, loading: singleBlogLoading } = useGetBlog({id});
+
+  // if (singleBlogLoading) {
+  //   return <h1>Loading...</h1>
+  // }
+  if (!singleBlog) {
     return <h1>Loading...</h1>
   }
 

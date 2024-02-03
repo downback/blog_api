@@ -1,13 +1,12 @@
 import axios from 'axios'
-import { useEffect, useState, React } from 'react'
+import { useState, React } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import PostList from '../components/PostList'
 import Pagination from '../components/Pagination'
 import Header from '../components/Header'
 import SearchBar from '../components/SearchBar'
-import useFetch from '../api/useFetch'
-import { useBlogsContext } from '../context/blogsContext'
 import NavBar from '../components/NavBar'
+import useGetBlogList from '../api/useGetBlogList'
 
 function BlogHome() {
   // const [posts, setPosts] = useState([])
@@ -27,20 +26,27 @@ function BlogHome() {
   //   fetchPosts()
   // }, [])
 
-  const { blogs, fetchBlogsFromSearch } = useBlogsContext()
   const [errorMsg, setErrorMsg] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const postsPerPage = 4
 
   // Get current posts
+  const query = new URLSearchParams(window.location.search)
+  const queryParamValue = query.get('q')
+  const [searchTerm, setSearchTerm] = useState(queryParamValue || '')
+
+  const {
+    data: blogs,
+    error,
+    loading
+  } = useGetBlogList({
+    searchTerm: queryParamValue
+  })
   const indexOfLastPost = currentPage * postsPerPage
   const indexOfFirstPost = indexOfLastPost - postsPerPage
   const currentPosts = blogs.slice(indexOfFirstPost, indexOfLastPost)
   const totalPages = Math.ceil(blogs.length / postsPerPage)
   const navigate = useNavigate()
-  const query = new URLSearchParams(window.location.search)
-  const queryParamValue = query.get('q')
-  const [searchTerm, setSearchTerm] = useState(queryParamValue || '')
 
   // Change page
   function paginate(pageNumber) {
@@ -48,23 +54,33 @@ function BlogHome() {
   }
 
   // Search
+  const removeSpecialChars = (str) => {
+    return str.replace(/[^\w\s]/gi, '')
+  }
 
   const handleSearchTerm = (e) => {
     e.preventDefault()
-    if (e.target.value.replace(/[^\w\s]/gi, '').length !== 0) {
-      setSearchTerm(e.target.value)
-
-      setErrorMsg('')
-    } else {
-      setErrorMsg('Invalid search term, try again ...')
-    }
+    setSearchTerm(e.target.value)
+    // if (removeSpecialChars(e.target.value).length !== 0) {
+    //   setErrorMsg('')
+    // } else {
+    //   setErrorMsg('Invalid search term, try again ...')
+    // }
   }
 
   const handleSearchResult = (e) => {
     e.preventDefault()
     console.log(searchTerm)
-    navigate(`?q=${searchTerm}`)
-    fetchBlogsFromSearch(searchTerm)
+    if (searchTerm.length === 0) {
+      navigate('/')
+    } else {
+      navigate(`?q=${searchTerm}`)
+    }
+
+    // TODO: handle search result
+    // 1. 특수문자 -> 입력이 되지만, 있으면 에러처리
+    // 2. enter를 누르면 검색이 되는데, 이때 검색어가 없으면 에러처리
+    // 3. 검색어 maxlength 20자 제한
   }
 
   return (

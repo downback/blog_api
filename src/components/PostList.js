@@ -1,13 +1,11 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useBlogsContext } from '../context/blogsContext'
 
 const PostList = ({ posts }) => {
   const navigate = useNavigate()
-  const { blogsLoading, searchBlogsLoading } = useBlogsContext()
-  if (blogsLoading || searchBlogsLoading) {
-    return <h1>Loading...</h1>
-  }
+  // if (blogsLoading || searchBlogsLoading) {
+  //   return <h1>Loading...</h1>
+  // }
 
   return (
     <div className="w-screen h-fit m-0 p-0 bg-slate-100">
