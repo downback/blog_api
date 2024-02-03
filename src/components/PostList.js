@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useBlogsContext } from '../api/blogsContext'
+import { useBlogsContext } from '../context/blogsContext'
 
 const PostList = ({ posts }) => {
   const navigate = useNavigate()
@@ -16,10 +16,10 @@ const PostList = ({ posts }) => {
           <li
             role="none"
             key={post.id}
-            onClick={() => {
-              navigate(`/post/${post.id}`)
-            }}
-            className="bg-white rounded shadow-md shadow-gray-400 px-5 py-5 m-5 w-4/12 h-max text-center cursor-pointer"
+            // onClick={() => {
+            //   navigate(`/post/${post.id}`)
+            // }}
+            className="bg-white rounded shadow-md shadow-gray-400 px-5 py-5 m-5 w-4/12 h-max text-center"
           >
             <h1 className="font-semibold text-lg mb-3">{post.title}</h1>
             <p>{post.body.substring(0, 150)}...</p>
@@ -35,7 +35,7 @@ const PostList = ({ posts }) => {
             <div className="">
               <Link
                 to={`/post/${post.id}`}
-                className="m-3 px-2 rounded text-center w-28 h-8 bg-slate-900 text-slate-100"
+                className="m-3 px-2 rounded text-center w-28 h-8 bg-slate-900 text-slate-100 cursor-pointer"
               >
                 Read More
               </Link>

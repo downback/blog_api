@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useMemo, useReducer } from 'react'
-import reducer from './blogsReducer'
+import reducer from '../reducers/blogsReducer'
 import {
   GET_BLOGS_BEGIN,
   GET_BLOGS_ERROR,
@@ -10,11 +10,10 @@ import {
   GET_BLOG_BY_SEARCHTERM_BEGIN,
   GET_BLOG_BY_SEARCHTERM_SUCCESS,
   GET_BLOG_BY_SEARCHTERM_ERROR,
-  SET_SEARCH_TERM,
-  BLOG_URL,
-  SEARCH_URL
-} from './constants'
-import axios from './axios'
+  SET_SEARCH_TERM
+} from '../utils/constants'
+import { BLOG_URL, SEARCH_URL } from '../utils/url_constants'
+import axios from '../api/axios'
 
 const initialState = {
   blogsLoading: false,

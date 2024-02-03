@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import { Link } from 'react-router-dom'
-import { useBlogsContext } from '../api/blogsContext'
+import { useBlogsContext } from '../context/blogsContext'
 import axios from '../api/axios'
 import NavBar from '../components/NavBar'
 

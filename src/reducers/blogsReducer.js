@@ -9,7 +9,7 @@ import {
   GET_BLOG_BY_SEARCHTERM_SUCCESS,
   GET_BLOG_BY_SEARCHTERM_ERROR,
   SET_SEARCH_TERM
-} from './constants'
+} from '../utils/constants'
 
 const blogsReducer = (state, action) => {
   switch (action.type) {

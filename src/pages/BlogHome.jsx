@@ -6,7 +6,7 @@ import Pagination from '../components/Pagination'
 import Header from '../components/Header'
 import SearchBar from '../components/SearchBar'
 import useFetch from '../api/useFetch'
-import { useBlogsContext } from '../api/blogsContext'
+import { useBlogsContext } from '../context/blogsContext'
 import NavBar from '../components/NavBar'
 
 function BlogHome() {
