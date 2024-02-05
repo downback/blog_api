@@ -22,6 +22,6 @@ const useGetSingleBlog = ({ id }) => {
     fetchSingleBlog()
   }, [])
 
-  return { singlePost, loading, error, setSinglePost }
+  return { singlePost, setSinglePost, loading, error, setError }
 }
 export default useGetSingleBlog

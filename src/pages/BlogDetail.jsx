@@ -37,7 +37,7 @@ const BlogDetail = () => {
       </div>
       <div>
         <ul className="flex flex-row">
-          {singlePost?.tags.map((tag) => (
+          {singlePost?.tags?.map((tag) => (
             <li key={tag} className="m-3">
               {tag}
             </li>
@@ -59,13 +59,13 @@ const BlogDetail = () => {
         >
           EDIT
         </li>
-        {/* <li
+        <li
           role="none"
-          onClick={() => handleDeleteBlog(singleBlog?.id)}
+          // onClick={() => handleDeleteBlog(singleBlog?.id)}
           className="mx-10 border border-current rounded-lg w-fit h-8 py-1 m-3 bg-sky-200 hover:bg-sky-400"
         >
           DELETE
-        </li> */}
+        </li>
       </ul>
     </div>
   )
