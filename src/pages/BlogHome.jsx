@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { useState, React } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import PostList from '../components/PostList'
@@ -35,6 +34,7 @@ function BlogHome() {
   const queryParamValue = query.get('q')
   const [searchTerm, setSearchTerm] = useState(queryParamValue || '')
 
+  // Get API data
   const {
     data: blogs,
     error,
@@ -42,6 +42,7 @@ function BlogHome() {
   } = useGetBlogList({
     searchTerm: queryParamValue
   })
+
   const indexOfLastPost = currentPage * postsPerPage
   const indexOfFirstPost = indexOfLastPost - postsPerPage
   const currentPosts = blogs.slice(indexOfFirstPost, indexOfLastPost)

@@ -8,6 +8,7 @@ const useGetBlogList = ({ searchTerm }) => {
   const [error, setError] = useState(null)
 
   useEffect(() => {
+    setLoading(true)
     const fetchBlogList = async () => {
       try {
         const url = searchTerm ? `${SEARCH_URL}?q=${searchTerm}&limit=40` : `${BLOG_URL}?limit=40`
