@@ -62,11 +62,11 @@ function BlogHome() {
   const handleSearchTerm = (e) => {
     e.preventDefault()
     setSearchTerm(e.target.value)
-    // if (removeSpecialChars(e.target.value).length !== 0) {
-    //   setErrorMsg('')
-    // } else {
-    //   setErrorMsg('Invalid search term, try again ...')
-    // }
+    if (removeSpecialChars(e.target.value).length !== 0) {
+      setErrorMsg('')
+    } else {
+      setErrorMsg('Invalid search term, try again ...')
+    }
   }
 
   const handleSearchResult = (e) => {
@@ -90,6 +90,7 @@ function BlogHome() {
       <Header />
       <div className="w-screen h-full flex flex-col justify-center items-center my-5">
         <SearchBar value={searchTerm} handleSearchTerm={handleSearchTerm} handleSearchResult={handleSearchResult} />
+        <span>{errorMsg}</span>
         <PostList posts={currentPosts} />
         <p>{errorMsg}</p>
         <Pagination totalPages={totalPages} paginate={paginate} />

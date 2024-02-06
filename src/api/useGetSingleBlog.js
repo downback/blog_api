@@ -20,7 +20,7 @@ const useGetSingleBlog = ({ id }) => {
       }
     }
     fetchSingleBlog()
-  }, [])
+  }, [id])
 
   return { singlePost, setSinglePost, loading, error, setError }
 }

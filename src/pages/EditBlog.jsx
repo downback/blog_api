@@ -17,10 +17,10 @@ const EditBlog = () => {
 
   const handleTitleInput = (e) => {
     setSinglePost({ ...singlePost, title: e.target.value })
-    if (e.target.value.length <= 40) {
+    if (e.target.value.length <= 30 && e.target.value.length !== 0) {
       setError('')
     } else {
-      setError('Input cannot exceed 40 characters.')
+      setError('Input is empty or too long')
     }
   }
 
@@ -44,23 +44,29 @@ const EditBlog = () => {
       .catch((err) => console.log(err))
   }
 
-  // const handleInputChange = (e) => {
-  //   const { name, value } = e.target.value
-  //   setSinglePost({ ...singlePost, [name]: e.target.value })
-
-  //   if (name === 'title') {
-  //     if (value.length <= 40) {
-  //       setError({ ...error, title: null })
-  //     } else {
-  //       setError({ ...error, title: 'Input cannot exceed 40 characters.' })
-  //     }
-  //   } else if (name === 'body') {
-  //     if (value.length !== 0) {
-  //       setError({ ...error, body: null })
-  //     } else {
-  //       setError({ ...error, body: 'Input invalid' })
-  //     }
+  // const validate = (values) => {
+  //   const errors = {}
+  //   if (!values.title) {
+  //     errors.title = 'Input title invalidated.'
+  //   } else if (values.title.length <= 40) {
+  //     errors.title = 'Input cannot exceed 40 characters.'
   //   }
+  //   if (!values.body) {
+  //     errors.body = 'Input body invalidated.'
+  //   }
+  //   return errors
+  // }
+
+  // const initialValues = { title: '', body: '' }
+  // const [localValues, setLocalValues] = useState(initialValues)
+
+  // React.useEffect(() => {
+  //   setLocalValues(singlePost)
+  // }, [singlePost])
+
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target
+  //   setLocalValues({ ...localValues, [name]: value })
   // }
 
   return (
@@ -70,21 +76,12 @@ const EditBlog = () => {
         <form action="submit" onSubmit={handleUpdate}>
           <div>
             <div>Title:</div>
-            <input
-              type="text"
-              value={singlePost?.title}
-              onChange={handleTitleInput}
-              className="rounded w-96 h-10 shadow-md shadow-gray-200 p-3 focus:border-none"
-            />
+            <input type="text" value={singlePost?.title} onChange={handleTitleInput} className="rounded w-96 h-10 shadow-md shadow-gray-200 p-3 focus:border-none" />
             <div className="text-rose-500">{error}</div>
           </div>
           <div>
             <div>Blog Text:</div>
-            <textarea
-              value={singlePost?.body}
-              onChange={handleBodyInput}
-              className="rounded w-96 h-96 shadow-md shadow-gray-200 p-3 focus:border-none"
-            />
+            <textarea value={singlePost?.body} onChange={handleBodyInput} className="rounded w-96 h-96 shadow-md shadow-gray-200 p-3 focus:border-none" />
             <div className="text-rose-500">{error}</div>
           </div>
           <div>
