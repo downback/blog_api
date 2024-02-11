@@ -8,19 +8,22 @@ import useGetSingleBlog from '../api/useGetSingleBlog'
 const EditBlog = () => {
   const { id } = useParams()
   const navigate = useNavigate()
+  // const [inputTerm, setInputTerm] = useState()
+  // const [errorMsg, setErrorMsg] = useState('')
+  // const { singlePost: blog, error, loading } = useGetSingleBlog({ id, inputTerm })
 
   const { singlePost, setSinglePost, error, setError, loading } = useGetSingleBlog({ id })
 
-  if (loading) {
-    return <h1>Loading...</h1>
-  }
+  // const handleTitleInput = (e) => {
+  //   setInputTerm({ ...inputTerm, title: e.target.value })
+  // }
 
   const handleTitleInput = (e) => {
     setSinglePost({ ...singlePost, title: e.target.value })
-    if (e.target.value.length <= 30 && e.target.value.length !== 0) {
-      setError('')
+    if (e.target.value.length >= 30 || e.target.value.length === 0) {
+      setError('Input invalid')
     } else {
-      setError('Input is empty or too long')
+      setError('')
     }
   }
 
@@ -69,11 +72,15 @@ const EditBlog = () => {
   //   setLocalValues({ ...localValues, [name]: value })
   // }
 
+  if (loading) {
+    return <h1>Loading...</h1>
+  }
+
   return (
     <>
       <NavBar />
       <div className="w-screen h-screen m-0 p-0 bg-slate-100 flex flex-row justify-center py-10">
-        <form action="submit" onSubmit={handleUpdate}>
+        <form action="submit">
           <div>
             <div>Title:</div>
             <input type="text" value={singlePost?.title} onChange={handleTitleInput} className="rounded w-96 h-10 shadow-md shadow-gray-200 p-3 focus:border-none" />
