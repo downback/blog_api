@@ -86,8 +86,12 @@ const AddBlog = () => {
     e.preventDefault()
     setFormErrors(validate(formValues))
     setIsSubmit(true)
+
     axios
-      .put(`https://dummyjson.com/posts/${id}`)
+      .post('https://dummyjson.com/posts/add', {
+        userId: 1,
+        ...formValues
+      })
       .then((res) => {
         setFormValues(res.data)
       })
@@ -101,15 +105,15 @@ const AddBlog = () => {
         <form action="submit" onSubmit={handleSubmit}>
           <div>
             <div>Title:</div>
-            <input type="text" value={formValues.title} onChange={(formValues) => handleChange({ target: { value: formValues, name: 'title' } })} className="rounded w-96 h-10 shadow-md shadow-gray-200 p-3 focus:border-none" />
+            <input name="title" type="text" value={formValues.title} onChange={handleChange} className="rounded w-96 h-10 shadow-md shadow-gray-200 p-3 focus:border-none" />
             {/* {Object.keys(formErrors).length === 0 && isSubmit ? <div>Signed in successfully</div> : <pre>{JSON.stringify(formValues, undefined, 2)}</pre>} */}
           </div>
           <div>
             <div>Blog Text:</div>
-            <textarea value={formValues.body} onChange={(e) => handleChange(e.target.value)} className="rounded w-96 h-96 shadow-md shadow-gray-200 p-3 focus:border-none" />
+            <textarea name="body" value={formValues.body} onChange={handleChange} className="rounded w-96 h-96 shadow-md shadow-gray-200 p-3 focus:border-none" />
           </div>
           <div>
-            <button type="button" className="m-3 px-2 rounded text-center w-28 h-8 bg-slate-900 text-slate-100">
+            <button type="submit" className="m-3 px-2 rounded text-center w-28 h-8 bg-slate-900 text-slate-100">
               Add Blog
             </button>
             <button
