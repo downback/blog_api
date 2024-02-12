@@ -13,7 +13,6 @@ const EditBlog = () => {
   const { singlePost: blogInitialValue, loading } = useGetSingleBlog({ id })
   const [singlePost, setSinglePost] = useState()
 
-  const { singlePost, setSinglePost, error, setError, loading } = useGetSingleBlog({ id })
   useEffect(() => {
     setSinglePost(blogInitialValue)
   }, [blogInitialValue])
