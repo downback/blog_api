@@ -8,7 +8,6 @@ import useGetSingleBlog from '../api/useGetSingleBlog'
 const EditBlog = () => {
   const { id } = useParams()
   const navigate = useNavigate()
-  const [inputTerm, setInputTerm] = useState()
   const [error, setError] = useState('')
   const { singlePost: blogInitialValue, loading } = useGetSingleBlog({ id })
   const [singlePost, setSinglePost] = useState()
@@ -17,63 +16,37 @@ const EditBlog = () => {
     setSinglePost(blogInitialValue)
   }, [blogInitialValue])
 
-  // const handleTitleInput = (e) => {
-  //   setInputTerm({ ...inputTerm, title: e.target.value })
-  // }
-
-  const handleTitleInput = (e) => {
-    setSinglePost({ ...singlePost, title: e.target.value })
-    if (e.target.value.length >= 30 || e.target.value.length === 0) {
-      setError('Input invalid')
-    } else {
-      setError('')
-    }
-  }
-
-  const handleBodyInput = (e) => {
-    setSinglePost({ ...singlePost, body: e.target.value })
-    if (e.target.value.length !== 0) {
-      setError('')
-    } else {
-      setError('Input invalid')
-    }
-  }
-
-  // network에서 에러가 없긴한데 Request Method가 put이 아니라 get으로 떠서 이게 request가 잘 간건지 잘 모르겠어요...
   const handleUpdate = (event) => {
     event.preventDefault()
     axios
       .put(`https://dummyjson.com/posts/${id}`, singlePost)
       .then((res) => {
         setSinglePost(res.data)
+        navigate(`/post/${id}`)
       })
       .catch((err) => console.log(err))
   }
 
-  // const validate = (values) => {
-  //   const errors = {}
-  //   if (!values.title) {
-  //     errors.title = 'Input title invalidated.'
-  //   } else if (values.title.length <= 40) {
-  //     errors.title = 'Input cannot exceed 40 characters.'
-  //   }
-  //   if (!values.body) {
-  //     errors.body = 'Input body invalidated.'
-  //   }
-  //   return errors
-  // }
+  const validate = (values) => {
+    const errors = {}
+    if (!values.title) {
+      errors.title = 'Input title invalidated.'
+    } else if (values.title.length >= 40) {
+      errors.title = 'Input cannot exceed 40 characters.'
+    }
+    if (!values.body) {
+      errors.body = 'Input body invalidated.'
+    }
+    return errors
+  }
 
-  // const initialValues = { title: '', body: '' }
-  // const [localValues, setLocalValues] = useState(initialValues)
-
-  // React.useEffect(() => {
-  //   setLocalValues(singlePost)
-  // }, [singlePost])
-
-  // const handleInputChange = (e) => {
-  //   const { name, value } = e.target
-  //   setLocalValues({ ...localValues, [name]: value })
-  // }
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+    const newPost = { ...singlePost, [name]: value }
+    setSinglePost(newPost)
+    const error = validate(newPost)
+    setError(error)
+  }
 
   if (loading) {
     return <h1>Loading...</h1>
@@ -86,13 +59,13 @@ const EditBlog = () => {
         <form action="submit">
           <div>
             <div>Title:</div>
-            <input type="text" value={singlePost?.title} onChange={handleTitleInput} className="rounded w-96 h-10 shadow-md shadow-gray-200 p-3 focus:border-none" />
-            <div className="text-rose-500">{error}</div>
+            <input name="title" type="text" value={singlePost?.title} onChange={handleInputChange} className="rounded w-96 h-10 shadow-md shadow-gray-200 p-3 focus:border-none" />
+            <div className="text-rose-500">{error.title}</div>
           </div>
           <div>
             <div>Blog Text:</div>
-            <textarea value={singlePost?.body} onChange={handleBodyInput} className="rounded w-96 h-96 shadow-md shadow-gray-200 p-3 focus:border-none" />
-            <div className="text-rose-500">{error}</div>
+            <textarea name="body" value={singlePost?.body} onChange={handleInputChange} className="rounded w-96 h-96 shadow-md shadow-gray-200 p-3 focus:border-none" />
+            <div className="text-rose-500">{error.body}</div>
           </div>
           <div>
             <button
