@@ -94,8 +94,8 @@ const EditBlog = () => {
           <div>
             <button
               type="button"
-              onClick={() => {
-                navigate(`/post/${id}`)
+              onClick={(e) => {
+                handleUpdate(e)
               }}
               className="m-3 px-2 rounded text-center w-28 h-8 bg-slate-900 text-slate-100"
             >
