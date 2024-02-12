@@ -1,5 +1,5 @@
 import { useParams } from 'react-router'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import NavBar from '../components/NavBar'
@@ -8,11 +8,15 @@ import useGetSingleBlog from '../api/useGetSingleBlog'
 const EditBlog = () => {
   const { id } = useParams()
   const navigate = useNavigate()
-  // const [inputTerm, setInputTerm] = useState()
-  // const [errorMsg, setErrorMsg] = useState('')
-  // const { singlePost: blog, error, loading } = useGetSingleBlog({ id, inputTerm })
+  const [inputTerm, setInputTerm] = useState()
+  const [error, setError] = useState('')
+  const { singlePost: blogInitialValue, loading } = useGetSingleBlog({ id })
+  const [singlePost, setSinglePost] = useState()
 
   const { singlePost, setSinglePost, error, setError, loading } = useGetSingleBlog({ id })
+  useEffect(() => {
+    setSinglePost(blogInitialValue)
+  }, [blogInitialValue])
 
   // const handleTitleInput = (e) => {
   //   setInputTerm({ ...inputTerm, title: e.target.value })
