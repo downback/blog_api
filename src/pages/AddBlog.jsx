@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import axios from '../api/axios'
 import NavBar from '../components/NavBar'
@@ -11,81 +11,35 @@ const AddBlog = () => {
   //   body: ''
   // })
 
-  // const handleAddBlog = (event) => {
-  //   event.preventDefault()
-  //   axios
-  //     .post(
-  //       'https://dummyjson.com/posts/add',
-  //       {
-  //         title: 'I am in love with someone.'
-  //       },
-  //       {
-  //         headers: {
-  //           'Content-Type': 'application/json'
-  //         }
-  //       }
-  //     )
-  //     .then((res) => {
-  //       console.log(res.data)
-  //       navigate('/')
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error:', error)
-  //     })
-  // }
-
   const initialValues = { title: '', body: '' }
   const [formValues, setFormValues] = useState(initialValues)
   const [formErrors, setFormErrors] = useState({})
   const [isSubmit, setIsSubmit] = useState(false)
 
-  // const handleAddBlog = async (e) => {
-  //   e.preventDefault()
-  //   if (title === '' || body === '') {
-  //     alert('Please fill out all input completely')
-  //   }
-  //   try {
-  //     const response = await axios.post('https://dummyjson.com/posts/add', { title, body })
-  //     alert(`Save ${response.data.title}`)
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
-
-  // const handleAddBlog = (event) => {
-  //   event.preventDefault()
-  //   axios
-  //     .put(`https://dummyjson.com/posts/${id}`)
-  //     .then((res) => {
-  //       setTitle(res.data)
-  //     })
-  //     .catch((err) => console.log(err))
-  // }
-
-  const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormValues({ ...formValues, [name]: value })
-  }
-
   const validate = (values) => {
     const errors = {}
     if (!values.title) {
-      errors.title = 'Username is required!'
-    } else if (values.title.length < 4) {
-      errors.title = 'title must be more than 4 characters'
+      errors.title = 'Input title invalidated.'
+    } else if (values.title.length >= 40) {
+      errors.title = 'Input cannot exceed 40 characters.'
     }
     if (!values.body) {
-      errors.body = 'Email is required!'
-    } else if (values.body.length > 10) {
-      errors.body = 'body cannot exceed more than 10 characters'
+      errors.body = 'Input body invalidated.'
     }
     return errors
   }
 
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    const newPost = { ...formValues, [name]: value }
+    setFormValues(newPost)
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
-    setFormErrors(validate(formValues))
-    setIsSubmit(true)
+    const { name, value } = e.target
+    const newPost = { ...formValues, [name]: value }
+    const error = validate(newPost)
 
     axios
       .post('https://dummyjson.com/posts/add', {
@@ -94,9 +48,20 @@ const AddBlog = () => {
       })
       .then((res) => {
         setFormValues(res.data)
+        setFormErrors(error)
+        setIsSubmit(true)
       })
       .catch((err) => console.log(err))
   }
+
+  useEffect(() => {
+    console.log(formErrors)
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      console.log(formValues)
+      alert('A new blog is successfully posted')
+      setFormValues(initialValues)
+    }
+  }, [formErrors])
 
   return (
     <>
@@ -106,16 +71,24 @@ const AddBlog = () => {
           <div>
             <div>Title:</div>
             <input name="title" type="text" value={formValues.title} onChange={handleChange} className="rounded w-96 h-10 shadow-md shadow-gray-200 p-3 focus:border-none" />
-            {/* {Object.keys(formErrors).length === 0 && isSubmit ? <div>Signed in successfully</div> : <pre>{JSON.stringify(formValues, undefined, 2)}</pre>} */}
+            <div className="text-rose-500">{formErrors.title}</div>
           </div>
           <div>
             <div>Blog Text:</div>
             <textarea name="body" value={formValues.body} onChange={handleChange} className="rounded w-96 h-96 shadow-md shadow-gray-200 p-3 focus:border-none" />
+            <div className="text-rose-500">{formErrors.body}</div>
           </div>
           <div>
-            <button type="submit" className="m-3 px-2 rounded text-center w-28 h-8 bg-slate-900 text-slate-100">
-              Add Blog
-            </button>
+            {Object.keys(formErrors).length === 0 && isSubmit ? (
+              <button type="submit" className="m-3 px-2 rounded text-center w-28 h-8 bg-slate-900 text-slate-100">
+                Add Blog
+              </button>
+            ) : (
+              <button type="submit" className="m-3 px-2 rounded text-center w-28 h-8 bg-slate-400 text-slate-100 cursor-default">
+                Add Blog
+              </button>
+            )}
+
             <button
               type="button"
               onClick={() => {

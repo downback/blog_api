@@ -1,6 +1,6 @@
 import { useParams } from 'react-router'
 import React, { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import NavBar from '../components/NavBar'
 import useGetSingleBlog from '../api/useGetSingleBlog'
@@ -8,7 +8,7 @@ import useGetSingleBlog from '../api/useGetSingleBlog'
 const EditBlog = () => {
   const { id } = useParams()
   const navigate = useNavigate()
-  const [error, setError] = useState('')
+  const [errorMsg, setErrorMsg] = useState('')
   const { singlePost: blogInitialValue, loading } = useGetSingleBlog({ id })
   const [singlePost, setSinglePost] = useState()
 
@@ -31,8 +31,8 @@ const EditBlog = () => {
     const errors = {}
     if (!values.title) {
       errors.title = 'Input title invalidated.'
-    } else if (values.title.length >= 40) {
-      errors.title = 'Input cannot exceed 40 characters.'
+    } else if (values.title.length >= 50) {
+      errors.title = 'Input cannot exceed 50 characters.'
     }
     if (!values.body) {
       errors.body = 'Input body invalidated.'
@@ -45,7 +45,7 @@ const EditBlog = () => {
     const newPost = { ...singlePost, [name]: value }
     setSinglePost(newPost)
     const error = validate(newPost)
-    setError(error)
+    setErrorMsg(error)
   }
 
   if (loading) {
@@ -60,12 +60,12 @@ const EditBlog = () => {
           <div>
             <div>Title:</div>
             <input name="title" type="text" value={singlePost?.title} onChange={handleInputChange} className="rounded w-96 h-10 shadow-md shadow-gray-200 p-3 focus:border-none" />
-            <div className="text-rose-500">{error.title}</div>
+            <div className="text-rose-500">{errorMsg.title}</div>
           </div>
           <div>
             <div>Blog Text:</div>
             <textarea name="body" value={singlePost?.body} onChange={handleInputChange} className="rounded w-96 h-96 shadow-md shadow-gray-200 p-3 focus:border-none" />
-            <div className="text-rose-500">{error.body}</div>
+            <div className="text-rose-500">{errorMsg.body}</div>
           </div>
           <div>
             <button

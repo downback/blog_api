@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import axios from './axios'
 import { BLOG_URL } from '../utils/url_constants'
 
-const useGetSingleBlog = ({ id, inputTerm }) => {
+const useGetSingleBlog = ({ id }) => {
   const [singlePost, setSinglePost] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -20,7 +20,7 @@ const useGetSingleBlog = ({ id, inputTerm }) => {
       }
     }
     fetchSingleBlog()
-  }, [id, inputTerm])
+  }, [id])
 
   return { singlePost, loading, error }
 }
