@@ -1,6 +1,7 @@
 import { React, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 import NavBar from '../components/NavBar'
 import useGetSingleBlog from '../api/useGetSingleBlog'
 
@@ -14,17 +15,15 @@ const BlogDetail = () => {
   if (loading) {
     return <h1>Loading...</h1>
   }
-  // if (!singlePost) {
-  //   return <h1>Loading...</h1>
-  // }
 
-  // const handleDeleteBlog = async (id) => {
-  //   try {
-  //     await axios.delete(`https://dummyjson.com/posts/${id}`)
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
+  const handleDeleteBlog = () => {
+    axios
+      .delete(`https://dummyjson.com/posts/${id}`, singleBlog)
+      .then((res) => {
+        setSingleBlog(res.data)
+      })
+      .catch((err) => console.log(err))
+  }
 
   return (
     <div className="w-screen h-fit m-0 p-0 bg-slate-100">
@@ -46,9 +45,7 @@ const BlogDetail = () => {
       </div>
       <ul className="flex flex-row w-screen h-10 justify-center content-center">
         <Link to="/">
-          <li className="mx-10 border border-current rounded-lg w-fit h-8 py-1 m-3 bg-sky-200 hover:bg-sky-400">
-            HOME
-          </li>
+          <li className="mx-10 border border-current rounded-lg w-fit h-8 py-1 m-3 bg-sky-200 hover:bg-sky-400">HOME</li>
         </Link>
         <li
           role="none"
@@ -59,11 +56,7 @@ const BlogDetail = () => {
         >
           EDIT
         </li>
-        <li
-          role="none"
-          // onClick={() => handleDeleteBlog(singleBlog?.id)}
-          className="mx-10 border border-current rounded-lg w-fit h-8 py-1 m-3 bg-sky-200 hover:bg-sky-400"
-        >
+        <li role="none" onClick={handleDeleteBlog} className="mx-10 border border-current rounded-lg w-fit h-8 py-1 m-3 bg-sky-200 hover:bg-sky-400">
           DELETE
         </li>
       </ul>
