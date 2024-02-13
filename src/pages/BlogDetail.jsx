@@ -21,6 +21,7 @@ const BlogDetail = () => {
       .delete(`https://dummyjson.com/posts/${id}`, singleBlog)
       .then((res) => {
         setSingleBlog(res.data)
+        navigate('/')
       })
       .catch((err) => console.log(err))
   }
