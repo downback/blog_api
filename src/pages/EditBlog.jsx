@@ -11,21 +11,7 @@ const EditBlog = () => {
   const [errorMsg, setErrorMsg] = useState('')
   const { singlePost: blogInitialValue, loading } = useGetSingleBlog({ id })
   const [singlePost, setSinglePost] = useState()
-
-  useEffect(() => {
-    setSinglePost(blogInitialValue)
-  }, [blogInitialValue])
-
-  const handleUpdate = (event) => {
-    event.preventDefault()
-    axios
-      .put(`https://dummyjson.com/posts/${id}`, singlePost)
-      .then((res) => {
-        setSinglePost(res.data)
-        navigate(`/post/${id}`)
-      })
-      .catch((err) => console.log(err))
-  }
+  const [isSubmit, setIsSubmit] = useState(false)
 
   const validate = (values) => {
     const errors = {}
@@ -40,12 +26,39 @@ const EditBlog = () => {
     return errors
   }
 
+  useEffect(() => {
+    setSinglePost(blogInitialValue)
+  }, [blogInitialValue])
+
+  useEffect(() => {
+    if (Object.keys(errorMsg).length === 0 && isSubmit) {
+      alert('A new blog is successfully posted')
+    }
+  }, [errorMsg])
+
+  const handleUpdate = (e) => {
+    e.preventDefault()
+    const { name, value } = e.target
+    const newPost = { ...singlePost, [name]: value }
+    const error = validate(newPost)
+
+    axios
+      .put(`https://dummyjson.com/posts/${id}`, singlePost)
+      .then((res) => {
+        setSinglePost(res.data)
+        setErrorMsg(error)
+        setIsSubmit(true)
+        // navigate(`/post/${id}`)
+      })
+      .catch((err) => console.log(err))
+  }
+
   const handleInputChange = (e) => {
     const { name, value } = e.target
     const newPost = { ...singlePost, [name]: value }
     setSinglePost(newPost)
-    const error = validate(newPost)
-    setErrorMsg(error)
+    // const error = validate(newPost)
+    // setErrorMsg(error)
   }
 
   if (loading) {
@@ -56,7 +69,7 @@ const EditBlog = () => {
     <>
       <NavBar />
       <div className="w-screen h-screen m-0 p-0 bg-slate-100 flex flex-row justify-center py-10">
-        <form action="submit">
+        <form action="submit" onSubmit={handleUpdate}>
           <div>
             <div>Title:</div>
             <input name="title" type="text" value={singlePost?.title} onChange={handleInputChange} className="rounded w-96 h-10 shadow-md shadow-gray-200 p-3 focus:border-none" />
@@ -68,15 +81,15 @@ const EditBlog = () => {
             <div className="text-rose-500">{errorMsg.body}</div>
           </div>
           <div>
-            <button
-              type="button"
-              onClick={(e) => {
-                handleUpdate(e)
-              }}
-              className="m-3 px-2 rounded text-center w-28 h-8 bg-slate-900 text-slate-100"
-            >
-              Update
-            </button>
+            {Object.keys(errorMsg).length === 0 ? (
+              <button type="submit" className="m-3 px-2 rounded text-center w-28 h-8 bg-slate-900 text-slate-100">
+                Update
+              </button>
+            ) : (
+              <button type="submit" className="m-3 px-2 rounded text-center w-28 h-8 bg-slate-400 text-slate-100 cursor-default">
+                Update
+              </button>
+            )}
             <button
               type="button"
               onClick={() => {

@@ -6,10 +6,6 @@ import NavBar from '../components/NavBar'
 const AddBlog = () => {
   const navigate = useNavigate()
   const { id } = useParams()
-  // const [values, setValues] = useState({
-  //   title: '',
-  //   body: ''
-  // })
 
   const initialValues = { title: '', body: '' }
   const [formValues, setFormValues] = useState(initialValues)
