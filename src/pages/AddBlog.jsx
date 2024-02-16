@@ -28,6 +28,7 @@ const AddBlog = () => {
     return errors
   }
 
+  // submit btn을 두번 눌러야 동작 되는데, 이런 경우에 뭐가 문제인지 어떻게 확인하나요?
   const handleChange = (e) => {
     const { name, value } = e.target
     const newPost = { ...formValues, [name]: value }

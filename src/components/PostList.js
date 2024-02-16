@@ -1,8 +1,7 @@
 import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const PostList = ({ posts }) => {
-  const navigate = useNavigate()
   // if (blogsLoading || searchBlogsLoading) {
   //   return <h1>Loading...</h1>
   // }
@@ -31,10 +30,7 @@ const PostList = ({ posts }) => {
               </ul>
             </div>
             <div className="">
-              <Link
-                to={`post/${post.id}`}
-                className="m-3 px-2 rounded text-center w-28 h-8 bg-slate-900 text-slate-100 cursor-pointer"
-              >
+              <Link to={`post/${post.id}`} className="m-3 px-2 rounded text-center w-28 h-8 bg-slate-900 text-slate-100 cursor-pointer">
                 Read More
               </Link>
             </div>
