@@ -27,37 +27,36 @@ const BlogDetail = () => {
   }
 
   return (
-    <div className="w-screen h-fit m-0 p-0 bg-slate-100">
+    <div className="w-screen h-dvh m-0 p-0 bg-slate-100">
       <NavBar />
       <div className="flex w-screen h-fit justify-center content-center">
         <div className="border rounded-sm border-current px-5 py-5 m-5 w-6/12 h-max text-center ">
           <h1 className="font-semibold text-lg mb-3">{singlePost?.title}</h1>
           <p>{singlePost?.body}</p>
+
+          <ul className="w-full h-ful flex flex-row items-center justify-center mt-3">
+            {singlePost?.tags?.map((tag) => (
+              <li key={tag} className="m-3 px-2 rounded text-center w-auto h-6 bg-slate-200">
+                {tag}
+              </li>
+            ))}
+          </ul>
         </div>
-      </div>
-      <div>
-        <ul className="flex flex-row">
-          {singlePost?.tags?.map((tag) => (
-            <li key={tag} className="m-3">
-              {tag}
-            </li>
-          ))}
-        </ul>
       </div>
       <ul className="flex flex-row w-screen h-10 justify-center content-center">
         <Link to="/">
-          <li className="mx-10 border border-current rounded-lg w-fit h-8 py-1 m-3 bg-sky-200 hover:bg-sky-400">HOME</li>
+          <li className="mx-10 w-fit h-8 p-1 m-3 rounded bg-slate-900 text-slate-100 hover:bg-slate-400">HOME</li>
         </Link>
         <li
           role="none"
           onClick={() => {
             navigate(`/edit_post/${id}`)
           }}
-          className="mx-10 border border-current rounded-lg w-fit h-8 py-1 m-3 bg-sky-200 hover:bg-sky-400"
+          className="mx-10 w-fit h-8 p-1 m-3 rounded bg-slate-900 text-slate-100 hover:bg-slate-400"
         >
           EDIT
         </li>
-        <li role="none" onClick={handleDeleteBlog} className="mx-10 border border-current rounded-lg w-fit h-8 py-1 m-3 bg-sky-200 hover:bg-sky-400">
+        <li role="none" onClick={handleDeleteBlog} className="mx-10 w-fit h-8 p-1 m-3 rounded bg-slate-900 text-slate-100 hover:bg-slate-400">
           DELETE
         </li>
       </ul>

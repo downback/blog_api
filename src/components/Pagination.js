@@ -14,15 +14,11 @@ const Pagination = ({ totalPages, paginate }) => {
   const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1)
 
   return (
-    <div className="flex w-screen h-fit justify-center content-center my-5 bottom-12">
+    <div className="flex w-screen h-fit justify-center content-center pt-11 pb-24 bg-slate-100">
       <ul className="flex flex-row">
         {pageNumbers.map((number) => (
           <li key={number}>
-            <button
-              type="button"
-              onClick={() => paginate(number)}
-              className="border border-current rounded-lg w-9 h-9 py-1 m-3 bg-sky-200 hover:bg-sky-400"
-            >
+            <button type="button" onClick={() => paginate(number)} className="p-1 mx-3 w-8 h-8 rounded bg-slate-900 text-slate-100 hover:bg-slate-400 ">
               {number}
             </button>
           </li>

@@ -82,7 +82,7 @@ function BlogHome() {
     <>
       <NavBar />
       <Header />
-      <div className="w-screen h-full flex flex-col justify-center items-center my-5">
+      <div className="w-screen h-full flex flex-col justify-center items-center">
         <SearchBar value={searchTerm} handleSearchTerm={handleSearchTerm} handleSearchResult={handleSearchResult} />
         <span className="bg-slate-100 w-screen text-center text-rose-500">{errorMsg}</span>
         <PostList posts={currentPosts} />

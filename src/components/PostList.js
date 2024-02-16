@@ -30,7 +30,7 @@ const PostList = ({ posts }) => {
               </ul>
             </div>
             <div className="">
-              <Link to={`post/${post.id}`} className="m-3 px-2 rounded text-center w-28 h-8 bg-slate-900 text-slate-100 cursor-pointer">
+              <Link to={`post/${post.id}`} className="m-3 px-2 py-1 rounded text-center w-28 h-8 bg-slate-900 text-slate-100 cursor-pointer">
                 Read More
               </Link>
             </div>
