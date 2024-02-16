@@ -1,23 +1,26 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import axios from '../api/axios'
 import NavBar from '../components/NavBar'
 
 const AddBlog = () => {
   const navigate = useNavigate()
-  const { id } = useParams()
 
   const initialValues = { title: '', body: '' }
   const [formValues, setFormValues] = useState(initialValues)
   const [formErrors, setFormErrors] = useState({})
   const [isSubmit, setIsSubmit] = useState(false)
+  const [inputChanged, setInputChanged] = useState(false)
+
+  // todo : submit버튼을 누르기 전에는 input창에 무엇을 입력해도 error & btn disabled 없음
+  //   ->  submit버튼을 누른 다음에는 input에 뭐든 입력하면 error & btn disabled 사라짐
 
   const validate = (values) => {
     const errors = {}
     if (!values.title) {
       errors.title = 'Input title invalidated.'
-    } else if (values.title.length >= 40) {
-      errors.title = 'Input cannot exceed 40 characters.'
+    } else if (values.title.length >= 30) {
+      errors.title = 'Input cannot exceed 30 characters.'
     }
     if (!values.body) {
       errors.body = 'Input body invalidated.'
@@ -29,6 +32,7 @@ const AddBlog = () => {
     const { name, value } = e.target
     const newPost = { ...formValues, [name]: value }
     setFormValues(newPost)
+    setInputChanged(true)
   }
 
   const handleSubmit = (e) => {
@@ -46,18 +50,22 @@ const AddBlog = () => {
         setFormValues(res.data)
         setFormErrors(error)
         setIsSubmit(true)
+        setInputChanged(false)
       })
       .catch((err) => console.log(err))
   }
 
   useEffect(() => {
-    console.log(formErrors)
     if (Object.keys(formErrors).length === 0 && isSubmit) {
-      console.log(formValues)
       alert('A new blog is successfully posted')
       setFormValues(initialValues)
+      setIsSubmit(false)
     }
-  }, [formErrors])
+    if (inputChanged) {
+      setIsSubmit(false)
+      setFormErrors({})
+    }
+  }, [formErrors, inputChanged])
 
   return (
     <>
@@ -75,12 +83,12 @@ const AddBlog = () => {
             <div className="text-rose-500">{formErrors.body}</div>
           </div>
           <div>
-            {Object.keys(formErrors).length === 0 && isSubmit ? (
+            {Object.keys(formErrors).length === 0 ? (
               <button type="submit" className="m-3 px-2 rounded text-center w-28 h-8 bg-slate-900 text-slate-100">
                 Add Blog
               </button>
             ) : (
-              <button type="submit" className="m-3 px-2 rounded text-center w-28 h-8 bg-slate-400 text-slate-100 cursor-default">
+              <button type="submit" disabled className="m-3 px-2 rounded text-center w-28 h-8 bg-slate-400 text-slate-100 cursor-default">
                 Add Blog
               </button>
             )}

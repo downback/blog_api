@@ -12,6 +12,7 @@ const EditBlog = () => {
   const { singlePost: blogInitialValue, loading } = useGetSingleBlog({ id })
   const [singlePost, setSinglePost] = useState()
   const [isSubmit, setIsSubmit] = useState(false)
+  const [inputChanged, setInputChanged] = useState(false)
 
   const validate = (values) => {
     const errors = {}
@@ -26,15 +27,12 @@ const EditBlog = () => {
     return errors
   }
 
-  useEffect(() => {
-    setSinglePost(blogInitialValue)
-  }, [blogInitialValue])
-
-  useEffect(() => {
-    if (Object.keys(errorMsg).length === 0 && isSubmit) {
-      alert('A new blog is successfully posted')
-    }
-  }, [errorMsg])
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+    const newPost = { ...singlePost, [name]: value }
+    setSinglePost(newPost)
+    setInputChanged(true)
+  }
 
   const handleUpdate = (e) => {
     e.preventDefault()
@@ -48,18 +46,24 @@ const EditBlog = () => {
         setSinglePost(res.data)
         setErrorMsg(error)
         setIsSubmit(true)
-        // navigate(`/post/${id}`)
+        setInputChanged(false)
       })
       .catch((err) => console.log(err))
   }
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target
-    const newPost = { ...singlePost, [name]: value }
-    setSinglePost(newPost)
-    // const error = validate(newPost)
-    // setErrorMsg(error)
-  }
+  // invalidated 된 다음에 submit하면 다시 원래 블로그글로 안돌아가게 해야 할 것 같은데, 못함...
+
+  useEffect(() => {
+    setSinglePost(blogInitialValue)
+    if (Object.keys(errorMsg).length === 0 && isSubmit) {
+      alert('A new blog is successfully posted')
+      setIsSubmit(false)
+    }
+    if (inputChanged) {
+      setIsSubmit(false)
+      setErrorMsg('')
+    }
+  }, [blogInitialValue, errorMsg, inputChanged])
 
   if (loading) {
     return <h1>Loading...</h1>
@@ -86,7 +90,7 @@ const EditBlog = () => {
                 Update
               </button>
             ) : (
-              <button type="submit" className="m-3 px-2 rounded text-center w-28 h-8 bg-slate-400 text-slate-100 cursor-default">
+              <button type="submit" disabled className="m-3 px-2 rounded text-center w-28 h-8 bg-slate-400 text-slate-100 cursor-default">
                 Update
               </button>
             )}
