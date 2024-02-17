@@ -1,30 +1,30 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import axios from './axios'
 import { BLOG_URL } from '../utils/url_constants'
 
-const useAddBlog = ({ id }) => {
-  const [addPost, setAddPost] = useState([])
+const useAddBlog = ({ onSuccess, onError }) => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  useEffect(() => {
-    setLoading(true)
-    const fetchSingleBlog = async () => {
-      try {
-        const response = await axios.post(`${BLOG_URL}/add`, {
-          userId: 1,
-          ...formValues
-        })
-        setAddPost(response.data)
-      } catch (err) {
-        setError(err)
-      } finally {
-        setLoading(false)
+  const addPost = useCallback(
+    (data) => {
+      setLoading(true)
+      const fetchSingleBlog = async () => {
+        try {
+          const response = await axios.post(`${BLOG_URL}/add`, data)
+          onSuccess?.(response)
+        } catch (err) {
+          setError(err)
+          onError?.(err)
+        } finally {
+          setLoading(false)
+        }
       }
-    }
-    fetchSingleBlog()
-  }, [id])
+      fetchSingleBlog()
+    },
+    [onSuccess, onError]
+  )
 
-  return { addPost, loading, error }
+  return { addPost, loading }
 }
 export default useAddBlog

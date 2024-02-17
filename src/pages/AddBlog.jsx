@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from '../api/axios'
 import NavBar from '../components/NavBar'
+import useAddBlog from '../api/useAddBlog'
 
 const AddBlog = () => {
   const navigate = useNavigate()
@@ -9,6 +10,14 @@ const AddBlog = () => {
   const initialValues = { title: '', body: '' }
   const [formValues, setFormValues] = useState(initialValues)
   const [formErrors, setFormErrors] = useState({})
+
+  const { loading, addPost } = useAddBlog({
+    onSuccess: (res) => {
+      alert('A new blog is successfully posted')
+      setFormValues(initialValues)
+    },
+    onError: (err) => console.log(err)
+  })
 
   // todo : submit버튼을 누르기 전에는 input창에 무엇을 입력해도 error & btn disabled 없음
   //   ->  submit버튼을 누른 다음에는 input에 뭐든 입력하면 error & btn disabled 사라짐
@@ -40,16 +49,10 @@ const AddBlog = () => {
     const error = validate(newPost)
     setFormErrors(error)
     if (Object.keys(error).length > 0) return
-    axios
-      .post('https://dummyjson.com/posts/add', {
-        userId: 1,
-        ...formValues
-      })
-      .then((res) => {
-        alert('A new blog is successfully posted')
-        setFormValues(initialValues)
-      })
-      .catch((err) => console.log(err))
+    addPost({
+      userId: 1,
+      ...formValues
+    })
   }
 
   return (
