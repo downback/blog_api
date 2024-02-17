@@ -8,11 +8,9 @@ import useGetSingleBlog from '../api/useGetSingleBlog'
 const EditBlog = () => {
   const { id } = useParams()
   const navigate = useNavigate()
-  const [errorMsg, setErrorMsg] = useState('')
+  const [errorMsg, setErrorMsg] = useState({})
   const { singlePost: blogInitialValue, loading } = useGetSingleBlog({ id })
   const [singlePost, setSinglePost] = useState()
-  const [isSubmit, setIsSubmit] = useState(false)
-  const [inputChanged, setInputChanged] = useState(false)
 
   const validate = (values) => {
     const errors = {}
@@ -31,7 +29,7 @@ const EditBlog = () => {
     const { name, value } = e.target
     const newPost = { ...singlePost, [name]: value }
     setSinglePost(newPost)
-    setInputChanged(true)
+    setErrorMsg({})
   }
 
   const handleUpdate = (e) => {
@@ -39,31 +37,20 @@ const EditBlog = () => {
     const { name, value } = e.target
     const newPost = { ...singlePost, [name]: value }
     const error = validate(newPost)
-
+    setErrorMsg(error)
+    if (Object.keys(error).length > 0) return
     axios
       .put(`https://dummyjson.com/posts/${id}`, singlePost)
       .then((res) => {
         setSinglePost(res.data)
-        setErrorMsg(error)
-        setIsSubmit(true)
-        setInputChanged(false)
+        alert('A new blog is successfully posted')
       })
       .catch((err) => console.log(err))
   }
 
-  // invalidated 된 다음에 submit하면 다시 원래 블로그글로 안돌아가게 해야 할 것 같은데, 못함...
-
   useEffect(() => {
     setSinglePost(blogInitialValue)
-    if (Object.keys(errorMsg).length === 0 && isSubmit) {
-      alert('A new blog is successfully posted')
-      setIsSubmit(false)
-    }
-    if (inputChanged) {
-      setIsSubmit(false)
-      setErrorMsg('')
-    }
-  }, [blogInitialValue, errorMsg, inputChanged])
+  }, [blogInitialValue])
 
   if (loading) {
     return <h1>Loading...</h1>
