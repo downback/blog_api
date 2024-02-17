@@ -9,8 +9,6 @@ const AddBlog = () => {
   const initialValues = { title: '', body: '' }
   const [formValues, setFormValues] = useState(initialValues)
   const [formErrors, setFormErrors] = useState({})
-  const [isSubmit, setIsSubmit] = useState(false)
-  const [inputChanged, setInputChanged] = useState(false)
 
   // todo : submit버튼을 누르기 전에는 input창에 무엇을 입력해도 error & btn disabled 없음
   //   ->  submit버튼을 누른 다음에는 input에 뭐든 입력하면 error & btn disabled 사라짐
@@ -28,12 +26,11 @@ const AddBlog = () => {
     return errors
   }
 
-  // submit btn을 두번 눌러야 동작 되는데, 이런 경우에 뭐가 문제인지 어떻게 확인하나요?
   const handleChange = (e) => {
     const { name, value } = e.target
     const newPost = { ...formValues, [name]: value }
     setFormValues(newPost)
-    setInputChanged(true)
+    setFormErrors({})
   }
 
   const handleSubmit = (e) => {
@@ -41,32 +38,19 @@ const AddBlog = () => {
     const { name, value } = e.target
     const newPost = { ...formValues, [name]: value }
     const error = validate(newPost)
-
+    setFormErrors(error)
+    if (Object.keys(error).length > 0) return
     axios
       .post('https://dummyjson.com/posts/add', {
         userId: 1,
         ...formValues
       })
       .then((res) => {
-        setFormValues(res.data)
-        setFormErrors(error)
-        setIsSubmit(true)
-        setInputChanged(false)
+        alert('A new blog is successfully posted')
+        setFormValues(initialValues)
       })
       .catch((err) => console.log(err))
   }
-
-  useEffect(() => {
-    if (Object.keys(formErrors).length === 0 && isSubmit) {
-      alert('A new blog is successfully posted')
-      setFormValues(initialValues)
-      setIsSubmit(false)
-    }
-    if (inputChanged) {
-      setIsSubmit(false)
-      setFormErrors({})
-    }
-  }, [formErrors, inputChanged])
 
   return (
     <>
