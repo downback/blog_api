@@ -49,7 +49,7 @@ const EditBlog = () => {
     const error = validate(newPost)
     setErrorMsg(error)
     if (Object.keys(error).length > 0) return
-    editPost({})
+    editPost()
   }
 
   useEffect(() => {

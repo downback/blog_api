@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import NavBar from '../components/NavBar'
 import useGetSingleBlog from '../api/useGetSingleBlog'
+import useDeleteBlog from '../api/useDeleteBlog'
 
 const BlogDetail = () => {
   const { id } = useParams()
@@ -11,19 +12,21 @@ const BlogDetail = () => {
   const [singleBlog, setSingleBlog] = useState(undefined)
 
   const { singlePost, loading } = useGetSingleBlog({ id })
+  const { deletePost } = useDeleteBlog({
+    onSuccess: (res) => {
+      setSingleBlog(res.data)
+      navigate('/')
+    },
+    onError: (err) => console.log(err),
+    id
+  })
 
   if (loading) {
     return <h1>Loading...</h1>
   }
 
   const handleDeleteBlog = () => {
-    axios
-      .delete(`https://dummyjson.com/posts/${id}`, singleBlog)
-      .then((res) => {
-        setSingleBlog(res.data)
-        navigate('/')
-      })
-      .catch((err) => console.log(err))
+    deletePost()
   }
 
   return (
