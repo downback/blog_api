@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import axios from '../api/axios'
 import NavBar from '../components/NavBar'
 import useAddBlog from '../api/useAddBlog'
 

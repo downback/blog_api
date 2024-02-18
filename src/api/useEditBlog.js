@@ -1,17 +1,18 @@
 import { useCallback, useState } from 'react'
+
 import axios from './axios'
 import { BLOG_URL } from '../utils/url_constants'
 
-const useAddBlog = ({ onSuccess, onError }) => {
+const useEditBlog = ({ onSuccess, onError, id }) => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  const addPost = useCallback(
+  const editPost = useCallback(
     (data) => {
       setLoading(true)
-      const fetchNewBlog = async () => {
+      const fetchUpdatedBlog = async () => {
         try {
-          const response = await axios.post(`${BLOG_URL}/add`, data)
+          const response = await axios.put(`${BLOG_URL}/${id}`, data)
           onSuccess?.(response)
         } catch (err) {
           setError(err)
@@ -20,11 +21,11 @@ const useAddBlog = ({ onSuccess, onError }) => {
           setLoading(false)
         }
       }
-      fetchNewBlog()
+      fetchUpdatedBlog()
     },
-    [onSuccess, onError]
+    [onSuccess, onError, id]
   )
 
-  return { addPost, loading }
+  return { editPost, loading }
 }
-export default useAddBlog
+export default useEditBlog

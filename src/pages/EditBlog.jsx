@@ -1,16 +1,26 @@
 import { useParams } from 'react-router'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
 import NavBar from '../components/NavBar'
 import useGetSingleBlog from '../api/useGetSingleBlog'
+import useEditBlog from '../api/useEditBlog'
 
 const EditBlog = () => {
   const { id } = useParams()
   const navigate = useNavigate()
+
   const [errorMsg, setErrorMsg] = useState({})
-  const { singlePost: blogInitialValue, loading } = useGetSingleBlog({ id })
   const [singlePost, setSinglePost] = useState()
+
+  const { singlePost: blogInitialValue, loading } = useGetSingleBlog({ id })
+  const { editPost } = useEditBlog({
+    onSuccess: (res) => {
+      setSinglePost(res.data)
+      alert('A new blog is successfully posted')
+    },
+    onError: (err) => console.log(err),
+    id
+  })
 
   const validate = (values) => {
     const errors = {}
@@ -39,13 +49,7 @@ const EditBlog = () => {
     const error = validate(newPost)
     setErrorMsg(error)
     if (Object.keys(error).length > 0) return
-    axios
-      .put(`https://dummyjson.com/posts/${id}`, singlePost)
-      .then((res) => {
-        setSinglePost(res.data)
-        alert('A new blog is successfully posted')
-      })
-      .catch((err) => console.log(err))
+    editPost({})
   }
 
   useEffect(() => {
